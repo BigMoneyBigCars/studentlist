@@ -15,6 +15,10 @@ h2 {
   font-size: 24px;
 }
 
+main {
+  width: 70%;
+  margin: 0 auto;
+}
 #student-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -35,7 +39,7 @@ h2 {
 #popUp {
   display: none;
   width: 100%;
-  background-color: rgba(245, 214, 174);
+  background-color: var(--theme-background-color);
   min-height: 500px;
   position: fixed;
   padding: 50px;
@@ -44,4 +48,33 @@ h2 {
 
 #popUp .container {
   padding: 80px;
+}
+
+/* Themes CC */
+
+section[data-theme="default"] {
+  --theme-background-color: #f5f5f5;
+}
+section {
+  background-color: var(--theme-background-color);
+}
+
+#popUp {
+  background-color: var(--theme-background-color);
+}
+
+section[data-theme="Gryffindor"] {
+  --theme-background-color: #f00;
+}
+
+section[data-theme="Hufflepuff"] {
+  --theme-background-color: purple;
+}
+
+section[data-theme="Ravenclaw"] {
+  --theme-background-color: blue;
+}
+
+section[data-theme="Slytherin"] {
+  --theme-background-color: green;
 }

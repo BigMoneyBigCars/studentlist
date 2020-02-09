@@ -9,20 +9,33 @@
   </head>
   <body>
     <main>
-      <section id="students">
+      <section id="students" data-theme="">
         <h1>List of Students at Hogwarts</h1>
+
+        <label>
+          Choose theme
+          <select name="theme" id="theme">
+            <option value="default">Default Theme</option>
+            <option value="Gryffindor">Gryffindor theme</option>
+            <option value="Hufflepuff">Hufflepuff theme</option>
+            <option value="Ravenclaw">Ravenclaw theme</option>
+            <option value="Slytherin">Slytherin theme</option>
+          </select>
+        </label>
         <div id="student-grid"></div>
 
         <template class="template">
-          <article class="singleProdukt">
-            <h2></h2>
-            <p></p>
-            <img src="#" alt="#" />
+          <article class="singleProdukt" data-theme="">
+            <div class="student-container" data-theme="">
+              <h2></h2>
+              <p></p>
+              <img src="#" alt="#" />
+            </div>
           </article>
         </template>
       </section>
 
-      <section id="popUp">
+      <section id="popUp" data-theme="">
         <div class="luk">X</div>
         <article class="container">
           <h2></h2>
