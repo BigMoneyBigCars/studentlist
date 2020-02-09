@@ -1,0 +1,47 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  color: black;
+  font-size: 20px;
+}
+h1 {
+  font-size: 80px;
+}
+h2 {
+  font-size: 24px;
+}
+
+#student-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  grid-gap: 10px;
+}
+
+.singleProdukt {
+  border: 2px solid black;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.student-container:hover {
+  background-color: rgba(245, 214, 174, 0.534);
+}
+
+#popUp {
+  display: none;
+  width: 100%;
+  background-color: rgba(245, 214, 174);
+  min-height: 500px;
+  position: fixed;
+  padding: 50px;
+  top: 0;
+}
+
+#popUp .container {
+  padding: 80px;
+}
