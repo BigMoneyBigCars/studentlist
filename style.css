@@ -21,12 +21,12 @@ main {
 }
 #student-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: auto;
   grid-gap: 10px;
 }
 
-.singleProdukt {
+.element-container {
   border: 2px solid black;
   padding: 15px;
   cursor: pointer;
@@ -65,6 +65,7 @@ section {
 
 section[data-theme="Gryffindor"] {
   --theme-background-color: #f00;
+  color: blue;
 }
 
 section[data-theme="Hufflepuff"] {
@@ -77,4 +78,59 @@ section[data-theme="Ravenclaw"] {
 
 section[data-theme="Slytherin"] {
   --theme-background-color: green;
+}
+
+.house-crest {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  height: 500px;
+  width: 100%;
+}
+:root {
+  --primary-color: white;
+  --headline-color: black;
+}
+.element-container[data-theme="Gryffindor"] .house-crest,
+.house-crest {
+  background-image: url(imgCrests/gryffindor.png);
+}
+
+.element-container[data-theme="Hufflepuff"] .house-crest,
+.house-crest {
+  background-image: url(imgCrests/hufflepuff.png);
+}
+
+.element-container[data-theme="Slytherin"] .house-crest,
+.house-crest {
+  background-image: url(imgCrests/slytherin.jpg);
+}
+.element-container[data-theme="Ravenclaw"] .house-crest,
+.house-crest {
+  background-image: url(imgCrests/ravenclaw.jfif);
+}
+
+[data-theme="Hufflepuff"] {
+  --primary-color: yellow;
+  --headline-color: rgb(224, 224, 86);
+}
+
+[data-theme="Slytherin"] {
+  --primary-color: green;
+  --headline-color: rgb(94, 194, 94);
+}
+
+[data-theme="Ravenclaw"] {
+  --primary-color: blue;
+  --headline-color: rgb(86, 86, 221);
+}
+
+[data-theme="Gryffindor"] {
+  --primary-color: red;
+  --headline-color: rgb(226, 99, 99);
+}
+#popUp {
+  background-color: var(--primary-color);
+
+  color: var(--headline-color);
 }

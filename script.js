@@ -28,8 +28,8 @@ function showStudents() {
     klon.querySelector("h2").textContent = element.fullname;
     klon.querySelector("p").textContent = element.house;
 
-    klon.querySelector(".singleProdukt").dataset.theme = element.house;
-    klon.querySelector(".singleProdukt").addEventListener("click", function() {
+    klon.querySelector(".element-container").dataset.theme = element.house;
+    klon.querySelector(".element-container").addEventListener("click", function() {
       document.querySelector("#popUp").dataset.theme = element.house;
       document.querySelector("#popUp h2").textContent = element.fullname;
       document.querySelector("#popUp p").textContent = element.house;
