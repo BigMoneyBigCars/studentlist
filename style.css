@@ -6,13 +6,18 @@
 
 p {
   color: black;
-  font-size: 20px;
+  font-size: 12px;
 }
 h1 {
   font-size: 80px;
+  margin: 50px auto;
 }
 h2 {
-  font-size: 24px;
+  font-size: 12px;
+}
+img {
+  height: 30px;
+  width: 30px;
 }
 
 main {
@@ -20,16 +25,22 @@ main {
   margin: 0 auto;
 }
 #student-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: auto;
-  grid-gap: 10px;
+  height: 10px;
 }
 
 .element-container {
   border: 2px solid black;
   padding: 15px;
   cursor: pointer;
+  text-align: center;
+}
+
+#list tbody tr td[data-field="name"] {
+  text-align: left;
+  padding-left: 20px;
+}
+
+.student-container {
 }
 
 .student-container:hover {
@@ -39,10 +50,11 @@ main {
 #popUp {
   display: none;
   width: 100%;
+  max-width: 1180px;
   background-color: var(--theme-background-color);
-  min-height: 500px;
+  min-height: 200px;
   position: fixed;
-  padding: 50px;
+  padding: 10px;
   top: 0;
 }
 
@@ -64,68 +76,76 @@ section {
 }
 
 section[data-theme="Gryffindor"] {
+  --houseCrest: url(imgCrests/gryffindor.png);
   --theme-background-color: #f00;
   color: blue;
 }
 
 section[data-theme="Hufflepuff"] {
+  --houseCrest: url(imgCrests/hufflepuff.png);
+
   --theme-background-color: purple;
 }
 
 section[data-theme="Ravenclaw"] {
+  --houseCrest: url(imgCrests/ravenclaw.jfif);
+
   --theme-background-color: blue;
 }
 
 section[data-theme="Slytherin"] {
+  --houseCrest: url(imgCrests/slytherin.jpg);
+
   --theme-background-color: green;
 }
 
 .house-crest {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: cover;
-  height: 500px;
-  width: 100%;
+  /*   background-repeat: no-repeat;
+  background-position: center; */
+  background-image: var--(houseCrest);
+  background-size: 100%;
+  height: 100px;
+  width: 100px;
 }
 :root {
   --primary-color: white;
   --headline-color: black;
 }
-.element-container[data-theme="Gryffindor"] .house-crest,
-.house-crest {
+.element-container[data-theme="Gryffindor"] {
   background-image: url(imgCrests/gryffindor.png);
 }
 
-.element-container[data-theme="Hufflepuff"] .house-crest,
-.house-crest {
+.element-container[data-theme="Hufflepuff"] {
   background-image: url(imgCrests/hufflepuff.png);
 }
 
-.element-container[data-theme="Slytherin"] .house-crest,
-.house-crest {
+.element-container[data-theme="Slytherin"] {
   background-image: url(imgCrests/slytherin.jpg);
 }
-.element-container[data-theme="Ravenclaw"] .house-crest,
-.house-crest {
+.element-container[data-theme="Ravenclaw"] {
   background-image: url(imgCrests/ravenclaw.jfif);
 }
 
 [data-theme="Hufflepuff"] {
   --primary-color: yellow;
   --headline-color: rgb(224, 224, 86);
+  background-image: url(imgCrests/hufflepuff.png);
 }
 
 [data-theme="Slytherin"] {
+  background-image: url(imgCrests/slytherin.jpg);
   --primary-color: green;
   --headline-color: rgb(94, 194, 94);
 }
 
 [data-theme="Ravenclaw"] {
+  background-image: url(imgCrests/ravenclaw.jfif);
   --primary-color: blue;
   --headline-color: rgb(86, 86, 221);
 }
 
 [data-theme="Gryffindor"] {
+  background-image: url(imgCrests/gryffindor.png);
   --primary-color: red;
   --headline-color: rgb(226, 99, 99);
 }
@@ -134,3 +154,47 @@ section[data-theme="Slytherin"] {
 
   color: var(--headline-color);
 }
+
+.grey {
+  filter: grayscale(100%);
+}
+#list tr#sorting {
+  height: 50px;
+}
+#sorting th.sortby {
+  text-decoration: underline;
+}
+
+#list {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+/* #list tr {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: auto;
+} */
+#list tbody tr td {
+  padding: 8px;
+  border: 2px solid black;
+}
+
+#list tbody tr:nth-child(odd) td {
+  background-color: rgb(139, 150, 154);
+  /*border-right: rgb(240, 249, 255) 1px dotted;*/
+}
+
+#list tbody tr:nth-child(even) td {
+  /* border-right: rgb(171, 219, 252) 1px dotted;*/
+}
+
+.hide {
+  content: "";
+}
+
+.pointerNone {
+  pointer-events: none;
+}
+
+/* search bar */
