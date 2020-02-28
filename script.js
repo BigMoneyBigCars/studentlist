@@ -1,28 +1,31 @@
+"use strict";
 window.addEventListener("DOMContentLoaded", init);
-
+//arrays
 const HTML = {};
 let allStudents = [];
 let currentList = [];
 let expelledStudents = [];
 let prefects = [];
-
 let halfBlood = [];
 let pureBlood = [];
+//variables for blood status
 let pureBloodTrue;
 let halfBloodTrue;
 
-const myHeading = document.querySelectorAll("#sorting > th");
+//json urls
+let jsonUrl1;
+let jsonUrl2;
+
+const myHeading = document.querySelectorAll("#sorting > div");
 const myButtons = document.querySelectorAll(".filter");
 
 function init() {
   jsonUrl1 = "https://petlatkea.dk/2020/hogwarts/students.json";
   jsonUrl2 = "https://petlatkea.dk/2020/hogwarts/families.json";
-
   start();
 }
 function start() {
-  console.log("ready");
-
+  // EVLS for sorting & filter
   myHeading.forEach(button => {
     button.addEventListener("click", sortButtonClick);
   });
@@ -32,7 +35,6 @@ function start() {
   });
 
   allStudents = currentList;
-
   fetchJson(jsonUrl2, makeBloodStatus);
 }
 
@@ -62,23 +64,60 @@ const Student = {
 function makeBloodStatus(jsonData) {
   halfBlood = jsonData.half;
   pureBlood = jsonData.pure;
-
   fetchJson(jsonUrl1, makeObjects);
 }
 
+function hackTheSystem() {
+  console.log("tis og guld");
+  const myself = Object.create(Student);
+
+  myself.fullname = "lasse Stausgaard";
+  myself.firstname = "Lasse";
+  myself.middlename = "Dumbledore";
+  myself.lastname = "Stausgaard";
+  myself.bloodStatus = "Wine";
+  myself.star = true;
+  myself.gender = "Wizard";
+  myself.firstname = "Lasse";
+  myself.winnner = true;
+  myself.image = "/imgCrests/" + "harry_potter.jpg";
+  console.log(myself);
+
+  currentList.push(myself);
+
+  /* if(hackTheSystem) {
+  student.firstname = Math.floor(Math.random() * 26);
+} */
+
+  allStudents.forEach(student => {
+    student.firstname = Math.floor(Math.random() * 26);
+  });
+  /* 
+  const Lasse = {
+    star: true,
+    star: false,
+    firstname: "Lasse",
+    lastname: "Stausgaard",
+    middlename: "Dumbledore",
+    house: "Hogwarts",
+    nickname: "",
+    image: "",
+    age: 0,
+    bloodStatus: "Dobby",
+    gender: "Human",
+    winner: true,
+    expelled: false,
+    bloodStatus: false
+  };
+ */
+  displayStudent(myself);
+}
+
 function makeObjects(jsonData) {
-  console.log("make objects function");
-
-  console.log(jsonData);
-  console.log(halfBlood);
-  console.log(pureBlood);
-
   jsonData.forEach(jsonObject => {
     const studentObject = Object.create(Student);
 
-    let bloodStatus;
     let fullName = jsonObject.fullname.trim().toLowerCase();
-
     let house = jsonObject.house.trim().toLowerCase();
     house = house.charAt(0).toUpperCase() + house.substring(1);
 
@@ -111,6 +150,8 @@ function makeObjects(jsonData) {
       middleName = " " + middleName.charAt(0).toUpperCase() + middleName.substring(1) + " ";
     }
     //middleName = middleName.charAt(0).toUpperCase() + middleName.substring(1);
+
+    let bloodStatus;
 
     pureBloodTrue = pureBlood.some(blood => {
       return blood === lastName;
@@ -169,6 +210,7 @@ function makeObjects(jsonData) {
 
 function expelStudent(student) {
   student.expelled = true;
+  student.winner = false;
 
   /*   if (student.expelled === true) {
     console.log(" ses man");
@@ -179,6 +221,8 @@ function expelStudent(student) {
   expelledStudents = allStudents.filter(student => {
     return student.expelled === true;
   }); */
+
+  // if expell=mig open popup
 
   expelledStudents.push(student);
 
@@ -191,7 +235,7 @@ function expelStudent(student) {
 
 function displayList(student) {
   // clear the list
-  document.querySelector("#list tbody").innerHTML = "";
+  document.querySelector("#list .tbody").innerHTML = "";
 
   // build a new list
   student.forEach(displayStudent);
@@ -217,7 +261,7 @@ function displayList(student) {
           .textContent.toLowerCase()
           .includes(search.value.toLowerCase())
       ) {
-        student.style.display = "block";
+        student.style.display = "contents";
       } else {
         student.style.display = "none";
       }
@@ -282,38 +326,31 @@ function displayStudent(student) {
     clone.querySelector("img").src = student.image;
     */
 
-  clone.querySelector("[data-field=image]").addEventListener("click", function() {
+  clone.querySelector("[data-field=show]").addEventListener("click", function() {
     showPopUp(student);
   });
 
-  document.querySelector("#list tbody").appendChild(clone);
+  document.querySelector("#list .tbody").appendChild(clone);
 }
 
 function toggleWinner(student) {
   console.log("toggle winner function");
-  prefects = currentList.filter(student => {
-    return student.winner === true;
-  });
+  prefects = currentList.filter(student => student.winner === true);
 
   const winnerType = prefects.some(winner => {
-    return winner.type === student.type;
+    return winner.house === student.house && winner.gender === student.gender;
   });
 
   if (student.winner === true) {
     student.winner = false;
-  } else if (student.winner === false) {
+  } else {
     if (winnerType) {
       console.log("cannot add more of one type ");
-
+      alreadyOneGenderInHouse(student);
       student.winner = false;
-
-      /*       document.querySelector("#onlyonekind").classList.add("show");
-      document.querySelector("#onlyonekind .closebutton").addEventListener("click", unShowDialog); */
-    } else if (prefects.length == 2) {
+    } else if (prefects.length == 8) {
+      twoPrefectsEachHouse(student);
       student.winner = false;
-
-      /*       document.querySelector("#onlytwoprefects").classList.add("show");
-      document.querySelector("#onlytwoprefects .closebutton").addEventListener("click", unShowDialog); */
 
       console.log("there's already 2 students in the array por favor");
     } else {
@@ -324,6 +361,39 @@ function toggleWinner(student) {
   displayList(currentList);
 }
 
+function alreadyOneGenderInHouse(student) {
+  console.log(currentList);
+  console.log("already one gender function");
+
+  document.querySelector("#onlyonekind").classList.add("show");
+  document.querySelector("#onlyonekind > div > button").addEventListener("click", closeDialog);
+  // document.querySelector("#onlyonekind .animal1").textContent = "det her virker ikke";
+
+  currentList.forEach(prefectStudent => {
+    if (prefectStudent.winner == true && prefectStudent.gender == student.gender && prefectStudent.house == student.house) {
+      console.log(prefectStudent.fullname);
+      document.querySelector("#onlyonekind .animal1").textContent = prefectStudent.fullname;
+    }
+    document.querySelector("#onlyonekind .remove1").addEventListener("click", function() {
+      if (prefectStudent.gender == student.gender) {
+        prefectStudent.winner = false;
+        student.winner = true;
+      }
+    });
+  });
+}
+
+function twoPrefectsEachHouse() {
+  console.log("two prefects each house function");
+
+  document.querySelector("#onlytwowinners").classList.add("show");
+  document.querySelector("#onlytwowinners .closebutton").addEventListener("click", closeDialog);
+}
+
+function closeDialog() {
+  document.querySelector("#onlyonekind").classList.remove("show");
+  document.querySelector("#onlytwowinners").classList.remove("show");
+}
 function showPopUp(student) {
   console.log(student.house);
   document.querySelector(".house-crest").dataset.theme = student.house;
@@ -451,15 +521,15 @@ function myFilter(filter) {
   console.log("myFilter", filter);
   if (filter === "*") {
     currentList = allStudents.filter(allStudents => true);
-    document.querySelector("#list > tbody").classList.remove("pointerNone");
+    document.querySelector("#list > .tbody").classList.remove("pointerNone");
     displayList(currentList);
   } else if (filter === "expelled") {
     currentList = expelledStudents;
-    document.querySelector("#list > tbody").classList.add("pointerNone");
+    document.querySelector("#list > .tbody").classList.add("pointerNone");
     displayList(currentList);
   } else {
     currentList = allStudents.filter(student => student.house === filter);
-    document.querySelector("#list > tbody").classList.remove("pointerNone");
+    document.querySelector("#list > .tbody").classList.remove("pointerNone");
     displayList(currentList);
   }
 }

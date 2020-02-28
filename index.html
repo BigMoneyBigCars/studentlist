@@ -34,11 +34,38 @@
             <option value="Slytherin">Slytherin theme</option>
           </select>
         </label> -->
-        <table id="list">
-          <thead>
-            <tr id="sorting">
-              <th data-action="sort" data-direction="asc" data-sort="winner">🏆</th>
-              <th data-action="sort" data-direction="asc" data-sort="star">⭐</th>
+
+       <!--  <div id="test">
+          <div class="test-container">
+            <div data-action="sort" data-direction="asc" data-sort="winner">Prefect</div>
+            <div data-action="sort" data-direction="asc" data-sort="star">Inquisitor</div>
+            <div data-action="sort" data-direction="asc" data-sort="firstname">firstname</div>
+            <div data-action="sort" data-direction="asc" data-sort="gender">gender</div>
+            <div data-action="sort" data-direction="asc" data-sort="house">House</div>
+            <div data-action="sort" data-direction="asc" data-sort="bloodStatus">bloodStatus</div>
+
+            <div data-action="sort" data-direction="asc" data-sort="image">Image</div>
+            <div data-action="sort" data-direction="asc" data-sort="expel">Expell</div>
+            <div>lo</th>
+
+
+          </div>
+        </div> -->
+        <div id="list">
+            <div id="sorting">
+              <div data-action="sort" data-direction="asc" data-sort="winner">Prefect</div>
+              <div data-action="sort" data-direction="asc" data-sort="star">Inquisitor</div>
+              <div data-action="sort" data-direction="asc" data-sort="firstname">firstname</div>
+              <div data-action="sort" data-direction="asc" data-sort="gender">gender</div>
+              <div data-action="sort" data-direction="asc" data-sort="house">House</div>
+              <div data-action="sort" data-direction="asc" data-sort="bloodStatus">bloodStatus</div>
+              <div data-action="sort" data-direction="asc" data-sort="image">Image</div>
+              <div data-action="sort" data-direction="asc" data-sort="expel">Expell</div>
+              <div>shkw</div>
+            </div>
+            <!-- <tr id="sorting">
+              <th data-action="sort" data-direction="asc" data-sort="winner">Prefect</th>
+              <th data-action="sort" data-direction="asc" data-sort="star">Inquisitor</th>
               <th data-action="sort" data-direction="asc" data-sort="firstname">firstname</th>
               <th data-action="sort" data-direction="asc" data-sort="gender">gender</th>
               <th data-action="sort" data-direction="asc" data-sort="house">House</th>
@@ -46,16 +73,27 @@
 
               <th data-action="sort" data-direction="asc" data-sort="image">Image</th>
               <th data-action="sort" data-direction="asc" data-sort="expel">Expell</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- animal template will be copied and inserted here -->
-          </tbody>
-        </table> 
+              <th>lo</th>
+            </tr> -->
+          
+            <div class="tbody">
+            <!-- student template will be copied and inserted here -->
+           </div>
     
         <template id="student" class="student-search">
-          <tr class="element-container">
+          <div class="element-container">
+            <div data-field="winner">🏆</div>
+            <div data-field="star">⭐</div>
+            <div class="fullname" data-field="name">NAME</div>
+            <div data-field="gender">Gender</div>
+            <div data-field="house">house</div>
+            <div data-field="bloodStatus">bloodStatus</div>
+            <div data-field="image"><img src="#" alt="#"></div>
+            <div> <button data-field="show">Show Student</button></div>
+            <div> <button data-field="expel">Expell Student</button></div>
+
+          </div>
+        <!--   <tr class="element-container">
             <td data-field="winner">🏆</td>
             <td data-field="star">⭐</td>
             <td class="fullname" data-field="name">NAME</td>
@@ -64,11 +102,31 @@
             <td data-field="bloodStatus">bloodStatus</td>
 
             <td data-field="image"><img src="#" alt="#"></td>
-            <td data-field="expel">lol</td>
-          </tr>
+            <td > <button data-field="expel">Expell Student</button></td>
+          </tr> -->
         </template>
 
 
+
+
+        <div id="onlytwowinners" class="dialog">
+          <div class="dialogcontent">
+            <button class="closebutton">close</button>
+            <h1>You can only have two winners!</h1>
+            <h2>Remove one, before you appoint more</h2>
+            <p><button data-action="remove1">remove</button> <span class="animal1">NAME, the TYPE</span></p>
+            <p><button data-action="remove2">remove</button> <span class="animal2">NAME, the TYPE</span></p>
+          </div>
+        </div>
+    
+        <div id="onlyonekind" class="dialog">
+          <div class="dialogcontent">
+            <button class="closebutton">close</button>
+            <h1>You can only have one winner of each type</h1>
+            <h2>Remove the other if you want to appoint a new one</h2>
+            <p><button class="remove1" data-action="remove1">remove</button> <span class="animal1">NAME, the TYPE</span></p>
+          </div>
+        </div>
 
         <div id="student-grid"></div>
 

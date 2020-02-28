@@ -9,7 +9,7 @@ p {
   font-size: 12px;
 }
 h1 {
-  font-size: 80px;
+  font-size: 40px;
   margin: 50px auto;
 }
 h2 {
@@ -21,7 +21,7 @@ img {
 }
 
 main {
-  width: 70%;
+  max-width: 1180px;
   margin: 0 auto;
 }
 #student-grid {
@@ -29,10 +29,11 @@ main {
 }
 
 .element-container {
-  border: 2px solid black;
-  padding: 15px;
-  cursor: pointer;
-  text-align: center;
+  display: contents;
+}
+
+.tbody {
+  display: contents;
 }
 
 #list tbody tr td[data-field="name"] {
@@ -47,6 +48,22 @@ main {
   background-color: rgba(245, 214, 174, 0.534);
 }
 
+#students button {
+  width: 150px;
+  height: 40px;
+  border: 2px solid black;
+  border-radius: 5%;
+  background-color: #f5f5f5;
+  color: black;
+  font-size: 13px;
+  transition: ease-in-out 0.3s;
+}
+
+#students button:hover {
+  background-color: black;
+
+  color: white;
+}
 #popUp {
   display: none;
   width: 100%;
@@ -64,41 +81,6 @@ main {
 
 /* Themes CC */
 
-section[data-theme="default"] {
-  --theme-background-color: #f5f5f5;
-}
-section {
-  background-color: var(--theme-background-color);
-}
-
-#popUp {
-  background-color: var(--theme-background-color);
-}
-
-section[data-theme="Gryffindor"] {
-  --houseCrest: url(imgCrests/gryffindor.png);
-  --theme-background-color: #f00;
-  color: blue;
-}
-
-section[data-theme="Hufflepuff"] {
-  --houseCrest: url(imgCrests/hufflepuff.png);
-
-  --theme-background-color: purple;
-}
-
-section[data-theme="Ravenclaw"] {
-  --houseCrest: url(imgCrests/ravenclaw.jfif);
-
-  --theme-background-color: blue;
-}
-
-section[data-theme="Slytherin"] {
-  --houseCrest: url(imgCrests/slytherin.jpg);
-
-  --theme-background-color: green;
-}
-
 .house-crest {
   /*   background-repeat: no-repeat;
   background-position: center; */
@@ -110,20 +92,6 @@ section[data-theme="Slytherin"] {
 :root {
   --primary-color: white;
   --headline-color: black;
-}
-.element-container[data-theme="Gryffindor"] {
-  background-image: url(imgCrests/gryffindor.png);
-}
-
-.element-container[data-theme="Hufflepuff"] {
-  background-image: url(imgCrests/hufflepuff.png);
-}
-
-.element-container[data-theme="Slytherin"] {
-  background-image: url(imgCrests/slytherin.jpg);
-}
-.element-container[data-theme="Ravenclaw"] {
-  background-image: url(imgCrests/ravenclaw.jfif);
 }
 
 [data-theme="Hufflepuff"] {
@@ -158,8 +126,27 @@ section[data-theme="Slytherin"] {
 .grey {
   filter: grayscale(100%);
 }
-#list tr#sorting {
+
+#list {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: auto;
+  text-align: center;
+}
+/* 
+.test-container {
+  width: 1180px;
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
   height: 50px;
+  padding: 15px;
+  cursor: pointer;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+} */
+#list #sorting {
+  display: contents;
 }
 #sorting th.sortby {
   text-decoration: underline;
@@ -170,6 +157,12 @@ section[data-theme="Slytherin"] {
   border-collapse: collapse;
 }
 
+button {
+  height: 30px;
+  width: 150px;
+  margin-left: 10px;
+  margin-right: 10px;
+}
 /* #list tr {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
@@ -198,3 +191,111 @@ section[data-theme="Slytherin"] {
 }
 
 /* search bar */
+
+/* dialog booxes */
+[data-action] {
+  cursor: pointer;
+}
+
+#sorting th {
+  filter: grayscale(100%);
+}
+
+.grey {
+  filter: grayscale(100%);
+}
+
+#sorting th.sortby {
+  text-decoration: underline;
+}
+
+#sorting th.sortby[data-sort-direction="asc"]::after {
+  content: "⇓";
+}
+
+#sorting th.sortby[data-sort-direction="desc"]::after {
+  content: "⇑";
+}
+
+#list {
+  border-collapse: collapse;
+}
+
+#list tbody tr td {
+  padding: 4px;
+}
+
+#list tbody tr:nth-child(odd) td {
+  background-color: lightblue;
+  border-right: rgb(240, 249, 255) 1px dotted;
+}
+
+#list tbody tr:nth-child(even) td {
+  border-right: rgb(171, 219, 252) 1px dotted;
+}
+
+/* ****** STAR ****** */
+
+[data-field="star"] {
+  text-align: center;
+  cursor: pointer;
+  min-width: 2em;
+}
+
+/****** WINNER ******/
+[data-field="winner"][data-winner="false"] {
+  filter: grayscale(100%);
+  cursor: pointer;
+}
+
+/******** DIALOG styling **********/
+
+.dialog {
+  display: none;
+}
+
+.dialog.show {
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.dialogcontent {
+  background-color: rgb(233, 233, 255);
+  font-family: Arial, Helvetica, sans-serif;
+  padding: 10vw 8vw 8vw 8vw;
+  position: relative;
+}
+
+.dialog h1 {
+  margin: 0;
+  font-size: 130%;
+}
+
+.dialog h2 {
+  margin: 0.5em 0;
+  font-size: 110%;
+  font-weight: lighter;
+}
+
+.dialog .closebutton {
+  -moz-appearance: none;
+  appearance: none;
+  position: absolute;
+  top: 4vw;
+  right: 4vw;
+  border: none;
+  background-color: transparent;
+  font-size: 90%;
+  color: darkgray;
+}
+
+.dialog .closebutton:hover {
+  color: black;
+}
