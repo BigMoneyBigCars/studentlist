@@ -11,17 +11,24 @@
     <main>
       <section id="students" data-theme="">
         <h1>List of Students at Hogwarts</h1>
-        <p>
-          Filter:
+
+      
+        <p class="button-container">
+   
           <button class="filter" data-action="filter" data-filter="Gryffindor">Gryffindor</button>
           <button class="filter" data-action="filter" data-filter="Hufflepuff">Hufflepuff</button>
           <button class="filter" data-action="filter" data-filter="Ravenclaw">Ravenclaw</button>
           <button class="filter" data-action="filter" data-filter="Slytherin">Slytherin</button>
           <button class="filter" data-action="filter" data-filter="*">all</button>
           <button class="filter" data-action="filter" data-filter="expelled">Expelled Students</button>
+          <button class="hack" data-action="filter" data-filter="Gryffindor">HackTheSystem</button>
+          
         </p>
+<div class="container-for-search">
+       Search <input id="search" type="text"/>
+       <div class="listNumber"></div>
 
-        <input id="search" type="text"/>
+      </div>
 
       
      <!--    <label>
@@ -55,13 +62,13 @@
             <div id="sorting">
               <div data-action="sort" data-direction="asc" data-sort="winner">Prefect</div>
               <div data-action="sort" data-direction="asc" data-sort="star">Inquisitor</div>
-              <div data-action="sort" data-direction="asc" data-sort="firstname">firstname</div>
-              <div data-action="sort" data-direction="asc" data-sort="gender">gender</div>
+              <div data-action="sort" data-direction="asc" data-sort="firstname">Name</div>
+              <div data-action="sort" data-direction="asc" data-sort="gender">Gender</div>
               <div data-action="sort" data-direction="asc" data-sort="house">House</div>
-              <div data-action="sort" data-direction="asc" data-sort="bloodStatus">bloodStatus</div>
+              <div data-action="sort" data-direction="asc" data-sort="bloodStatus">Blood Status</div>
               <div data-action="sort" data-direction="asc" data-sort="image">Image</div>
+              <div data-action="sort" data-direction="asc" data-sort="expel">Show Student</div>
               <div data-action="sort" data-direction="asc" data-sort="expel">Expell</div>
-              <div>shkw</div>
             </div>
             <!-- <tr id="sorting">
               <th data-action="sort" data-direction="asc" data-sort="winner">Prefect</th>
@@ -152,17 +159,33 @@
         </template>
       </section>
 
-      <section id="popUp" data-theme="">
-        <div class="luk">X</div>
-        <article class="container">
+      <section id="popUp" >
+        <div class="luk">Close Window</div>
+        
+        <article class="information-container">
+          
+
+
+          
+            <div class="contents">
+            <div class="house-crest" data-theme=""> 
+            </div>
+
           <div class="image-container">
             <img src="#" alt="#">
           </div>
-          <h2 class="name"></h2>
+        
+          <p class="name"></p>
+          <p class="gender"></p>
 
-          <h3></h3>
-          <p></p>
-         <div class="house-crest" data-theme=""> 
+          
+          <p class="house"></p>
+          <p class="blood"></p>
+
+          <p class="prefect"></p>
+          <p class="squad"></p>
+
+        </div>
         </article>
       </section>
     </main>

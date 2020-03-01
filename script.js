@@ -8,6 +8,9 @@ let expelledStudents = [];
 let prefects = [];
 let halfBlood = [];
 let pureBlood = [];
+let squad = [];
+
+let listNumber;
 //variables for blood status
 let pureBloodTrue;
 let halfBloodTrue;
@@ -16,35 +19,7 @@ let halfBloodTrue;
 let jsonUrl1;
 let jsonUrl2;
 
-const myHeading = document.querySelectorAll("#sorting > div");
-const myButtons = document.querySelectorAll(".filter");
-
-function init() {
-  jsonUrl1 = "https://petlatkea.dk/2020/hogwarts/students.json";
-  jsonUrl2 = "https://petlatkea.dk/2020/hogwarts/families.json";
-  start();
-}
-function start() {
-  // EVLS for sorting & filter
-  myHeading.forEach(button => {
-    button.addEventListener("click", sortButtonClick);
-  });
-
-  myButtons.forEach(botton => {
-    botton.addEventListener("click", filterBottonClick);
-  });
-
-  allStudents = currentList;
-  fetchJson(jsonUrl2, makeBloodStatus);
-}
-
-async function fetchJson(url, callback) {
-  const response = await fetch(url);
-  const jsonData = await response.json();
-
-  callback(jsonData);
-}
-
+// students
 const Student = {
   star: false,
   firstname: "",
@@ -60,6 +35,36 @@ const Student = {
   expelled: false,
   bloodStatus: false
 };
+//filtereing, sorting and hack
+const myHeading = document.querySelectorAll("#sorting > div");
+const myButtons = document.querySelectorAll(".filter");
+const hack = document.querySelector(".hack");
+
+function init() {
+  jsonUrl1 = "https://petlatkea.dk/2020/hogwarts/students.json";
+  jsonUrl2 = "https://petlatkea.dk/2020/hogwarts/families.json";
+  start();
+}
+function start() {
+  // EVLS for sorting & filter
+  myHeading.forEach(button => {
+    button.addEventListener("click", sortButtonClick);
+  });
+
+  myButtons.forEach(botton => {
+    botton.addEventListener("click", filterBottonClick);
+  });
+  hack.addEventListener("click", hackTheSystem);
+  allStudents = currentList;
+  fetchJson(jsonUrl2, makeBloodStatus);
+}
+
+async function fetchJson(url, callback) {
+  const response = await fetch(url);
+  const jsonData = await response.json();
+
+  callback(jsonData);
+}
 
 function makeBloodStatus(jsonData) {
   halfBlood = jsonData.half;
@@ -68,49 +73,52 @@ function makeBloodStatus(jsonData) {
 }
 
 function hackTheSystem() {
-  console.log("tis og guld");
   const myself = Object.create(Student);
 
+  randomBackground();
   myself.fullname = "lasse Stausgaard";
   myself.firstname = "Lasse";
   myself.middlename = "Dumbledore";
   myself.lastname = "Stausgaard";
   myself.bloodStatus = "Wine";
   myself.star = true;
+  myself.house = "hoggywarts";
   myself.gender = "Wizard";
   myself.firstname = "Lasse";
   myself.winnner = true;
+
   myself.image = "/imgCrests/" + "harry_potter.jpg";
   console.log(myself);
 
-  currentList.push(myself);
+  let wizard = document.querySelector(myself.gender == "Wizard");
 
-  /* if(hackTheSystem) {
-  student.firstname = Math.floor(Math.random() * 26);
-} */
+  console.log(wizard);
+
+  currentList.unshift(myself);
 
   allStudents.forEach(student => {
     student.firstname = Math.floor(Math.random() * 26);
   });
-  /* 
-  const Lasse = {
-    star: true,
-    star: false,
-    firstname: "Lasse",
-    lastname: "Stausgaard",
-    middlename: "Dumbledore",
-    house: "Hogwarts",
-    nickname: "",
-    image: "",
-    age: 0,
-    bloodStatus: "Dobby",
-    gender: "Human",
-    winner: true,
-    expelled: false,
-    bloodStatus: false
-  };
- */
-  displayStudent(myself);
+
+  displayList(currentList);
+}
+
+function randomColor() {
+  let r = Math.floor(Math.random() * 255);
+  let g = Math.floor(Math.random() * 255);
+  let b = Math.floor(Math.random() * 255);
+
+  return getColorString(r, g, b);
+}
+
+function getColorString(r, b, g) {
+  return `rgb(${r}, ${b}, ${g})`;
+}
+
+function randomBackground() {
+  document.querySelector("body").style.backgroundColor = randomColor();
+
+  setTimeout(randomBackground, 100);
 }
 
 function makeObjects(jsonData) {
@@ -240,17 +248,12 @@ function displayList(student) {
   // build a new list
   student.forEach(displayStudent);
 
+  listNumber = currentList.length;
+  console.log(listNumber);
+  document.querySelector(".listNumber").textContent = "Number of students being shown: " + listNumber;
   // SEARCHBAR
   let search = document.getElementById("search");
   let el = document.querySelectorAll(".element-container");
-
-  let test1 = document.querySelector(".fullname");
-  console.log(test1);
-
-  console.log(el);
-
-  let test = document.querySelector(".fullname").textContent;
-  console.log(test);
 
   search.addEventListener("keyup", function() {
     el.forEach(student => {
@@ -307,25 +310,6 @@ function displayStudent(student) {
     expelStudent(student);
   });
 
-  /* 
-  if (student.winner == true) {
-    clone.querySelector("[data-field=winner]").textContent = "🏆";
-    clone.querySelector("[data-field=winner]").classList.remove("grey");
-  } else if (student.winner == false) {
-    clone.querySelector("[data-field=winner]").classList.add("grey");
-  }
- */
-  //
-  /*  
-    clone.querySelector("[data-field=type]").textContent = student.type;
-    clone.querySelector("[data-field=age]").textContent = student.age; */
-
-  /* 
-    clone.querySelector(".test").textContent = student.house;
-    clone.querySelector("p").textContent = student.fullname;
-    clone.querySelector("img").src = student.image;
-    */
-
   clone.querySelector("[data-field=show]").addEventListener("click", function() {
     showPopUp(student);
   });
@@ -334,7 +318,6 @@ function displayStudent(student) {
 }
 
 function toggleWinner(student) {
-  console.log("toggle winner function");
   prefects = currentList.filter(student => student.winner === true);
 
   const winnerType = prefects.some(winner => {
@@ -357,7 +340,6 @@ function toggleWinner(student) {
       student.winner = true;
     }
   }
-
   displayList(currentList);
 }
 
@@ -384,8 +366,6 @@ function alreadyOneGenderInHouse(student) {
 }
 
 function twoPrefectsEachHouse() {
-  console.log("two prefects each house function");
-
   document.querySelector("#onlytwowinners").classList.add("show");
   document.querySelector("#onlytwowinners .closebutton").addEventListener("click", closeDialog);
 }
@@ -397,58 +377,39 @@ function closeDialog() {
 function showPopUp(student) {
   console.log(student.house);
   document.querySelector(".house-crest").dataset.theme = student.house;
-  document.querySelector("#popUp h2").textContent = student.fullname;
-  document.querySelector("#popUp p").textContent = student.house;
-  document.querySelector("#popUp h3").textContent = student.gender;
+  document.querySelector("#popUp .name").textContent = "Name: " + student.fullname;
+  document.querySelector("#popUp .house").textContent = "House: " + student.house;
+  document.querySelector("#popUp .gender").textContent = "Gender: " + student.gender;
+  document.querySelector("#popUp .blood").textContent = "Blood Status: " + student.bloodStatus;
   document.querySelector("#popUp img").src = student.image;
-
+  if (student.winner == true) {
+    document.querySelector("#popUp .prefect").textContent = "Student is a prefect";
+  } else {
+    document.querySelector("#popUp .prefect").textContent = "Student is not a prefect";
+  }
+  if (student.star == true) {
+    document.querySelector("#popUp .squad").textContent = "Student is a squad member";
+  } else {
+    document.querySelector("#popUp .squad").textContent = "Student is not a squad member";
+  }
   document.querySelector("#popUp").style.display = "block";
   document.querySelector(".luk").addEventListener("click", noDisplayPopUp);
   document.querySelector("#popUp").addEventListener("click", noDisplayPopUp);
 }
-/* 
-function showStudents() {
-  const liste = document.querySelector("#student-grid");
-  const skabelon = document.querySelector(".template");
 
-  students.forEach(element => {
-    const klon = skabelon.cloneNode(true).content;
-
-    klon.querySelector("h2").textContent = element.fullname;
-    klon.querySelector("p").textContent = element.house;
-
-    klon.querySelector(".element-container").dataset.theme = element.house;
-    klon.querySelector(".element-container").addEventListener("click", function() {
-      document.querySelector("#popUp").dataset.theme = element.house;
-      document.querySelector("#popUp h2").textContent = element.fullname;
-      document.querySelector("#popUp p").textContent = element.house;
-
-      document.querySelector("#popUp").style.display = "block";
-      document.querySelector(".luk").addEventListener("click", noDisplayPopUp);
-      document.querySelector("#popUp").addEventListener("click", noDisplayPopUp);
-    });
-    liste.appendChild(klon);
-  });
-}
-*/
-// pop up
 function noDisplayPopUp() {
   document.querySelector("#popUp").style.display = "none";
 }
-
-function theme() {
+/* function theme() {
   document.querySelector("select#theme").addEventListener("change", selected);
-
   function selected() {
     const selectedTheme = this.value;
     console.log(selectedTheme);
     document.querySelector("section").dataset.theme = selectedTheme;
   }
-}
-
+} */
 function sortButtonClick() {
   console.log("sortButton");
-
   //const sort = this.dataset.sort;
   if (this.dataset.action === "sort") {
     clearAllSort();
@@ -476,13 +437,10 @@ function clearAllSort() {
 function mySort(sortBy, sortDirection) {
   console.log(`mySort-, ${sortBy} sortDirection-  ${sortDirection}  `);
   let desc = 1;
-
   currentList = allStudents.filter(allStudents => true);
-
   if (sortDirection === "desc") {
     desc = -1;
   }
-
   currentList.sort(function(a, b) {
     var x = a[sortBy];
     var y = b[sortBy];
@@ -494,17 +452,22 @@ function mySort(sortBy, sortDirection) {
     }
     return 0;
   });
-
   displayList(currentList);
 }
 
 //--------------------------------------FILTER
 
 function toggleStar(student) {
-  if (student.star == true) {
+  if (student.house == "Slytherin " && student.star == false) {
+    student.star = true;
+  } else if (student.house == "Slytherin" && student.bloodStatus == "muggle") {
+    student.star = false;
+  } else if (student.bloodStatus == "Pure blood" && student.star == false) {
+    student.star = true;
+  } else if (student.star == true) {
     student.star = false;
   } else {
-    student.star = true;
+    student.star = false;
   }
   console.log(student.star);
   displayList(currentList);
@@ -521,10 +484,12 @@ function myFilter(filter) {
   console.log("myFilter", filter);
   if (filter === "*") {
     currentList = allStudents.filter(allStudents => true);
+
     document.querySelector("#list > .tbody").classList.remove("pointerNone");
     displayList(currentList);
   } else if (filter === "expelled") {
     currentList = expelledStudents;
+
     document.querySelector("#list > .tbody").classList.add("pointerNone");
     displayList(currentList);
   } else {
